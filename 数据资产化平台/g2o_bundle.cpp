@@ -26,9 +26,7 @@
 
 #include "g2o/solvers/structure_only/structure_only_solver.h"
 
-#include "common/BundleParams.h"
-#include "common/BALProblem.h"
-#include "g2o_bal_class.h"
+#include "lass.h"
 
 
 using namespace Eigen;
