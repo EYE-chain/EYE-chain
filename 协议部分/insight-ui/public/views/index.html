@@ -1,0 +1,89 @@
+<div class="alert alert-danger" data-ng-show="flashMessage">
+  {{$root.flashMessage}}
+</div>
+<div data-ng-include src="'views/includes/connection.html'"></div>
+<section data-ng-controller="IndexController" data-ng-init="index()">
+  <div class="container">
+    <div id="home" class="row">
+      <div class="col-xs-12 col-md-8">
+
+        <div id="search-form-mobile" class="visible-xs" data-ng-include src="'views/includes/search.html'"></div>
+
+        <h1 translate>Latest Blocks</h1>
+        <table class="table table-hover table-striped" style="table-layout: fixed">
+          <thead>
+            <tr>
+              <th translate>Height</th>
+              <th translate>Age</th>
+              <th class="text-right"><span class="ellipsis" translate>Transactions</span></th>
+              <th class="text-right hidden-xs"><span class="ellipsis" translate>Mined by</span></th>
+              <th class="text-right" translate>Size</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr data-ng-show="!blocks.length"><td colspan="4" translate>Waiting for blocks...</td></tr>
+          <tr class="fader" data-ng-repeat='b in blocks'>
+            <td>
+              <a href="block/{{b.hash}}">{{b.height}}</a>
+            </td>
+            <td><span class="ellipsis">{{humanSince(b.time)}}</span></td>
+            <td class="text-right">{{b.txlength}}</td>
+            <td class="text-right hidden-xs"><a href="{{b.poolInfo.url}}" title="{{b.poolInfo.poolName}}" target="_blank" data-ng-show="b.poolInfo">{{b.poolInfo.poolName}}</a></td>
+            <td class="text-right">{{b.size}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="btn-more">
+          <a href="blocks" class="btn btn-default" translate>See all blocks</a>
+        </div>
+
+        <h2 translate>Latest Transactions</h2>
+
+        <table class="table table-hover table-striped" style="table-layout: fixed;">
+          <thead>
+            <tr>
+              <th>Hash</th>
+              <th class="text-right" translate>Value Out</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr data-ng-show="!txs.length"><td colspan="3" translate>Waiting for transactions...</td></tr>
+          <tr class="fader" data-ng-repeat='tx in txs'>
+            <td>
+              <a class="ellipsis" href="tx/{{tx.txid}}">{{tx.txid}}</a>
+            </td>
+            <td class="text-right"><span class="ellipsis">{{$root.currency.getConvertion(tx.valueOut) || tx.valueOut + ' BTC'}}</span></td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="col-xs-12 col-md-4 col-gray">
+        <h2 translate>About Block Explorer</h2>
+
+	<p><strong><a href="https://blockexplorer.com/">Bitcoin Block Explorer</a></strong> is an open source web tool that allows you to view information about <a href="https://en.bitcoin.it/wiki/Blocks">blocks</a>, <a href="https://en.bitcoin.it/wiki/Address">addresses</a>, and <a href="https://en.bitcoin.it/wiki/Transactions">transactions</a> on the Bitcoin blockchain. The <a href="http://github.com/bitcoin-blockexplorer">source code</a> is on GitHub.</p>
+
+	<p>If you are new to Bitcoin, check out <a href="https://www.weusecoins.com/">We Use Coins</a> and <a href="https://bitcoin.org/en/">Bitcoin.org</a>.</p>
+
+	<p><strong>Public Bitcoin API:</strong> Machine readable stats & blockchain info can be accessed directly through the <a href="/api-ref">REST and Websockets APIs</a>.</p>
+
+	<p><strong>Testnet</strong> is Bitcoin's sandbox. Block Explorer supports viewing
+	both the <a href="https://testnet.blockexplorer.com">testnet</a> and <a href="https://blockexplorer.com/">mainnet</a> blockchains.</p>
+
+	<p>Thanks to <a href="https://www.privateinternetaccess.com/" title="VPN Service">Private 
+	Internet Access</a> for hosting the site. They provide a <a href="https://www.privateinternetaccess.com/" title="VPN Service">VPN Service</a> that accepts Bitcoin.</p>
+
+        <div id="powered" class="row">
+          <div class="powered-text">
+            <small class="text-muted" translate>Powered by</small>
+          </div>
+          <a href="http://bitcore.io" target="_blank" class="bitcore" title="Bitcore"></a>
+          <a href="http://angularjs.org" target="_blank" class="angularjs" title="AngularJS"></a>
+          <a href="https://code.google.com/p/leveldb/" target="_blank" class="leveldb" title="LevelDB"></a>
+          <a href="http://nodejs.org" target="_blank" class="nodejs" title="NodeJs"></a>
+        </div>
+      </div> <!-- END OF COL-3 -->
+    </div>
+  </div>
+</section>
